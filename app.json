@@ -17,7 +17,7 @@
     },
     "env": {
         "SECRET": {
-            "description": "Bot API Key from BotFather https://t.me/BotFather"
+            "description": "A secret key for hashing. Get one using `openssl rand -hex 32`"
         }
     },
     "addons": [{

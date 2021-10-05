@@ -1,1 +1,1 @@
-web: python3 -m uvicorn scoreboard.main: app --host 0.0.0.0 --log-level info
+web: python3 -m uvicorn scoreboard.main:app --host 0.0.0.0 --log-level info

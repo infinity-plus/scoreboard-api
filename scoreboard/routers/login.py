@@ -25,8 +25,6 @@ class TokenData(BaseModel):
     username: Optional[str] = None
 
 
-User = pydantic_model_creator(UserModel, exclude=("hashed_password",))
-
 UserInDB = pydantic_model_creator(UserModel)
 
 pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
@@ -68,7 +66,10 @@ async def authenticate_user(username: str, password: str):
     return user
 
 
-def create_access_token(data: dict, expires_delta: Optional[timedelta] = None):
+def create_access_token(
+    data: dict,
+    expires_delta: Optional[timedelta] = None,
+):
     to_encode = data.copy()
     if expires_delta:
         expire = datetime.utcnow() + expires_delta
@@ -99,7 +100,7 @@ async def get_current_user(token: str = Depends(oauth2_scheme)):
 
 
 async def get_current_active_user(
-    current_user: User = Depends(get_current_user),
+    current_user: UserInDB = Depends(get_current_user),
 ):
     if current_user.disabled:
         raise HTTPException(status_code=400, detail="Inactive user")
@@ -119,7 +120,10 @@ async def login_for_access_token(
     form_data: OAuth2PasswordRequestForm = Depends(),
 ):
 
-    user = await authenticate_user(form_data.username, form_data.password)
+    user = await authenticate_user(
+        form_data.username,
+        form_data.password,
+    )
 
     if not user:
         raise HTTPException(
@@ -131,12 +135,15 @@ async def login_for_access_token(
     access_token_expires = timedelta(minutes=ACCESS_TOKEN_EXPIRE_MINUTES)
 
     access_token = create_access_token(
-        data={"sub": user.username}, expires_delta=access_token_expires
+        data={"sub": user.username},
+        expires_delta=access_token_expires,
     )
 
     return Token(access_token=access_token, token_type="bearer")
 
 
-@router.get("/users/me/", response_model=User)
-async def read_users_me(current_user: User = Depends(get_current_active_user)):
+@router.get("/users/me/", response_model=UserInDB)
+async def read_users_me(
+    current_user: UserInDB = Depends(get_current_active_user),
+):
     return current_user

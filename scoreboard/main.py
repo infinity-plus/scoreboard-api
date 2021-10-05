@@ -1,9 +1,15 @@
+from os import getenv
+
 from fastapi import FastAPI
 from pydantic import BaseModel
 from tortoise import Tortoise
 from tortoise.contrib.fastapi import register_tortoise
 
 from scoreboard.routers import login, scoreboard
+
+DB_URI = getenv("DATABASE_URL", "sqlite://db.sqlite3")
+if DB_URI.startswith("postgres://"):
+    DB_URI = DB_URI.replace("postgres://", "postgresql://", 1)
 
 app = FastAPI(
     title="Scoreboard API",
@@ -12,7 +18,7 @@ app = FastAPI(
 )
 register_tortoise(
     app=app,
-    db_url="sqlite://db.sqlite3",
+    db_url=DB_URI,
     modules={"models": ["scoreboard.models"]},
     generate_schemas=True,
     add_exception_handlers=True,

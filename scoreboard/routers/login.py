@@ -11,7 +11,7 @@ from tortoise.contrib.pydantic.creator import pydantic_model_creator
 
 from scoreboard.models import User as UserModel
 
-SECRET_KEY = getenv("SECRET_KEY")
+SECRET_KEY = getenv("SECRET")
 ALGORITHM = "HS256"
 ACCESS_TOKEN_EXPIRE_MINUTES = 30
 

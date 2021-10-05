@@ -68,6 +68,6 @@ async def create_team(
     team: str,
     current_user: User = Depends(get_current_active_user),
 ):
-    created_team = await Team.create(name=team)
-    await created_team.save()
-    return await Team_Pydantic.from_tortoise_orm(created_team)
+    created_team = await Team.get_or_create(name=team)
+    await created_team[0].save()
+    return await Team_Pydantic.from_tortoise_orm(created_team[0])

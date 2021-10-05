@@ -4,7 +4,7 @@ from fastapi import APIRouter, Depends, HTTPException, status
 from tortoise.contrib.pydantic.creator import pydantic_model_creator
 
 from scoreboard.models import Score, Team
-from scoreboard.routers.login import User, get_current_active_user
+from scoreboard.routers.login import UserInDB as User, get_current_active_user
 
 Score_Pydantic = pydantic_model_creator(Score, name="Score")
 Team_Pydantic = pydantic_model_creator(Team, name="Team")

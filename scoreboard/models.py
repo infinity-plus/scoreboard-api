@@ -1,7 +1,5 @@
 from datetime import date as dt
-from typing import Optional
 
-from pydantic import EmailStr
 from tortoise import fields
 from tortoise.fields.relational import ForeignKeyRelation
 from tortoise.models import Model

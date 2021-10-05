@@ -1,0 +1,26 @@
+{
+    "name": "Scoreboard API",
+    "description": "A RESTful API to manage a scoreboard for a particular tournament.",
+    "repository": "https://github.com/infinity-plus/scoreboard-api",
+    "logo": "",
+    "keywords": [
+        "python",
+        "fastapi",
+        "restful"
+    ],
+    "image": "heroku/python",
+    "formation": {
+        "web": {
+            "quantity": 1,
+            "size": "free"
+        }
+    },
+    "env": {
+        "SECRET": {
+            "description": "Bot API Key from BotFather https://t.me/BotFather"
+        }
+    },
+    "addons": [{
+        "plan": "heroku-postgresql"
+    }]
+}

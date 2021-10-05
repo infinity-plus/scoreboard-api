@@ -28,10 +28,8 @@ class Team(Model):
 class User(Model):
     id: int = fields.IntField(pk=True)
     username: str = fields.CharField(max_length=20, index=True)
-    email: Optional[EmailStr] = None
-    full_name: Optional[str] = None
-    disabled: Optional[bool] = None
-    hashed_password: str
+    disabled = fields.BooleanField(default=False)
+    hashed_password: str = fields.CharField(max_length=150, index=True)
 
     def __str__(self):
         return f"{self.username}"

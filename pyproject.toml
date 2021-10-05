@@ -12,6 +12,7 @@ passlib = "1.7.4"
 tortoise-orm = "0.17.7"
 uvicorn = "0.13.4"
 asyncpg = "0.24.0"
+python-multipart = "^0.0.5"
 
 [tool.poetry.dev-dependencies]
 

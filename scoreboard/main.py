@@ -8,8 +8,6 @@ from tortoise.contrib.fastapi import register_tortoise
 from scoreboard.routers import login, scoreboard
 
 DB_URI = getenv("DATABASE_URL", "sqlite://db.sqlite3")
-if DB_URI.startswith("postgres://"):
-    DB_URI = DB_URI.replace("postgres://", "postgresql://", 1)
 
 app = FastAPI(
     title="Scoreboard API",
